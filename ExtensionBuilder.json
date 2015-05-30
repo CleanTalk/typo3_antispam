@@ -1,0 +1,30 @@
+{
+    "modules": [],
+    "properties": {
+        "backendModules": [],
+        "description": "Protect your site from spam",
+        "emConf": {
+            "category": "module",
+            "custom_category": "",
+            "dependsOn": "typo3 => 6.2\n",
+            "disableLocalization": false,
+            "disableVersioning": false,
+            "sourceLanguage": "en",
+            "state": "alpha",
+            "targetVersion": "6.2",
+            "version": "0.1.0"
+        },
+        "extensionKey": "cleantalk",
+        "name": "CleanTalk antispam",
+        "originalExtensionKey": "",
+        "persons": [],
+        "plugins": [],
+        "vendorName": "CleanTalk"
+    },
+    "wires": [],
+    "log": {
+        "last_modified": "2015-05-30 01:08",
+        "extension_builder_version": "6.2.0",
+        "be_user": " (1)"
+    }
+}

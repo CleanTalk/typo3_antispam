@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+	<file t3:id="1415814810" source-language="en" datatype="plaintext" original="messages" date="2011-10-17T20:22:32Z" product-name="cleantalk" htmlEscape="false">
+		<header/>
+		<body>
+			<trans-unit id="cleantalk.config.enablePlugin">
+				<source>Enable plugin: Enable plugin description</source>
+			</trans-unit>
+			<trans-unit id="cleantalk.config.customForms">
+				<source>Custom forms checking: Custom forms checking description</source>
+			</trans-unit>
+			<trans-unit id="cleantalk.config.accessKey" htmlEscape="false">
+				<source>Access key: <![CDATA[ <input type='button' style='margin-top:5px;-webkit-border-bottom-left-radius: 5px;-webkit-border-bottom-right-radius: 5px;-webkit-border-radius: 5px;-webkit-border-top-left-radius: 5px;-webkit-border-top-right-radius: 5px;background: #3399FF;border-radius: 5px;box-sizing: border-box;color: #FFFFFF;font: normal normal 400 14px/16.2px "Open Sans";padding:3px;border:0px none;cursor:pointer;' value='Get access key automatically' onclick='location.href="?get_auto_key=1"'>]]></source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
