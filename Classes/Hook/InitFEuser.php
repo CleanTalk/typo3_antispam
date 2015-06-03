@@ -40,7 +40,7 @@ class InitFEuser {
 								$comment_str = preg_replace('/^[^\*]*?\*\*\*|\*\*\*[^\*]*?$/i', '', $aResult['ct_result_comment']);
 								$comment_str = preg_replace('/<[^<>]*>/i', '', $comment_str);
 							}
-							Mage::getModel('antispam/api')->CleantalkDie($comment_str);
+							InitFEuser::CleantalkDie($comment_str);
 						}
 					}
 				}
@@ -177,7 +177,7 @@ class InitFEuser {
         $ct_request->sender_email = isset($arEntity['sender_email']) ? $arEntity['sender_email'] : '';
         $ct_request->sender_nickname = isset($arEntity['sender_nickname']) ? $arEntity['sender_nickname'] : '';
         $ct_request->sender_ip = isset($arEntity['sender_ip']) ? $arEntity['sender_ip'] : $sender_ip;
-        $ct_request->agent = 'typo3-100';
+        $ct_request->agent = 'magento-120';
         $ct_request->js_on = $checkjs;
         $ct_request->sender_info = $sender_info;
 
@@ -285,10 +285,118 @@ class InitFEuser {
         return $ret_val;
     }
     
-    static function GetCheckJSValue() {
-	return md5(Mage::getStoreConfig('general/cleantalk/api_key') . '_' . Mage::getStoreConfig('trans_email/ident_general/email'));
-    }
+    static function PageAddon() {
+        if (!session_id()) session_start();
+	$_SESSION['ct_submit_time'] = time();
 
+	$field_name = 'ct_checkjs';	// todo - move this to class constant
+	$ct_check_def = '0';
+	if (!isset($_COOKIE[$field_name])) setcookie($field_name, $ct_check_def, 0, '/');
+
+	$ct_check_value = self::GetCheckJSValue();
+	$js_template = '<script type="text/javascript">
+// <![CDATA[
+function ctSetCookie(c_name, value) {
+ document.cookie = c_name + "=" + escape(value) + "; path=/";
+}
+ctSetCookie("%s", "%s");
+// ]]>
+</script>
+';
+	$ct_template_addon_body = sprintf($js_template, $field_name, $ct_check_value);
+	return $ct_template_addon_body;
+    }
+    
+    static function GetCheckJSValue() {
+    $conf=unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cleantalk']);
+	return md5($conf['access_key'] . '_' . $GLOBALS['BE_USER']['user']['email']);
+    }
+    
+    public function hookRegisterData($params = array(), \TYPO3\CMS\Core\Http\AjaxRequestHandler &$ajaxObj = NULL)
+    {
+    	$sender_email = null;
+	    $message = '';
+	    InitFEuser::cleantalkGetFields($sender_email,$message,$_POST);
+	    if($sender_email!==null)
+	    {
+			$aMessage = array();
+			$aMessage['type'] = 'register';
+			$aMessage['sender_email'] = $sender_email;
+			$aMessage['sender_nickname'] = '';
+			$aMessage['message_title'] = '';
+			$aMessage['message_body'] = $message;
+			$aMessage['example_title'] = '';
+			$aMessage['example_body'] = '';
+			$aMessage['example_comments'] = '';
+			
+			$aResult = InitFEuser->CheckSpam($aMessage, FALSE);
+			
+			if(isset($aResult) && is_array($aResult))
+			{
+				if($aResult['errno'] == 0)
+				{
+					if($aResult['allow'] == 0)
+					{
+						if (preg_match('//u', $aResult['ct_result_comment']))
+						{
+							$comment_str = preg_replace('/^[^\*]*?\*\*\*|\*\*\*[^\*]*?$/iu', '', $aResult['ct_result_comment']);
+							$comment_str = preg_replace('/<[^<>]*>/iu', '', $comment_str);
+						}
+						else
+						{
+							$comment_str = preg_replace('/^[^\*]*?\*\*\*|\*\*\*[^\*]*?$/i', '', $aResult['ct_result_comment']);
+							$comment_str = preg_replace('/<[^<>]*>/i', '', $comment_str);
+						}
+						$ajaxObj->setResult($comment_str);
+						return;
+					}
+				}
+			}
+	    }
+    }
+    
+    public function hookCommentData($params = array(), \TYPO3\CMS\Core\Http\AjaxRequestHandler &$ajaxObj = NULL)
+    {
+    	$sender_email = null;
+	    $message = '';
+	    InitFEuser::cleantalkGetFields($sender_email,$message,$_POST);
+	    if($sender_email!==null)
+	    {
+			$aMessage = array();
+			$aMessage['type'] = 'comment';
+			$aMessage['sender_email'] = $sender_email;
+			$aMessage['sender_nickname'] = '';
+			$aMessage['message_title'] = '';
+			$aMessage['message_body'] = $message;
+			$aMessage['example_title'] = '';
+			$aMessage['example_body'] = '';
+			$aMessage['example_comments'] = '';
+			
+			$aResult = InitFEuser->CheckSpam($aMessage, FALSE);
+			
+			if(isset($aResult) && is_array($aResult))
+			{
+				if($aResult['errno'] == 0)
+				{
+					if($aResult['allow'] == 0)
+					{
+						if (preg_match('//u', $aResult['ct_result_comment']))
+						{
+							$comment_str = preg_replace('/^[^\*]*?\*\*\*|\*\*\*[^\*]*?$/iu', '', $aResult['ct_result_comment']);
+							$comment_str = preg_replace('/<[^<>]*>/iu', '', $comment_str);
+						}
+						else
+						{
+							$comment_str = preg_replace('/^[^\*]*?\*\*\*|\*\*\*[^\*]*?$/i', '', $aResult['ct_result_comment']);
+							$comment_str = preg_replace('/<[^<>]*>/i', '', $comment_str);
+						}
+						$ajaxObj->setResult($comment_str);
+						return;
+					}
+				}
+			}
+	    }
+    }
 }
 
 ?>

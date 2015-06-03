@@ -10,8 +10,8 @@
  * "version" and "dependencies" must not be touched!
  ***************************************************************/
 //print_r($GLOBALS['TYPO3_CONF_VARS']);
-print $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cleantalk'];
-die();
+//print $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cleantalk'];
+//die();
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'CleanTalk antispam',
 	'description' => 'Protect your site from spam',
