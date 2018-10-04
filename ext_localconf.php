@@ -12,4 +12,4 @@ defined('TYPO3_MODE') or die();
         '\TYPO3\CMS\Cleantalk\Hook\InitFEuser::class->hookCommentData'
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['initFEuser'][] = \TYPO3\CMS\Cleantalk\Hook\InitFEuser::class . '->hookPostData';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['initFEuser'][] = get_class(\TYPO3\CMS\Cleantalk\Hook\InitFEuser::class) . '->hookPostData';

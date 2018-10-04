@@ -12,7 +12,7 @@
             "sourceLanguage": "en",
             "state": "alpha",
             "targetVersion": "6.2",
-            "version": "0.1.0"
+            "version": "0.2.0"
         },
         "extensionKey": "cleantalk",
         "name": "CleanTalk antispam",

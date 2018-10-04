@@ -1,2 +1,4 @@
-# typo3-antispam
-Typo3 anti-spam extension.
+typo3-antispam
+================
+Version 0.2.0
+================
