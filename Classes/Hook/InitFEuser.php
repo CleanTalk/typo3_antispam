@@ -329,7 +329,7 @@ ctSetCookie("%s", "%s");
 			$aMessage['example_body'] = '';
 			$aMessage['example_comments'] = '';
 			
-			$aResult = InitFEuser->CheckSpam($aMessage, FALSE);
+			$aResult = InitFEuser::CheckSpam($aMessage, FALSE);
 			
 			if(isset($aResult) && is_array($aResult))
 			{
