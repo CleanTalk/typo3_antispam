@@ -6,8 +6,8 @@
 			<trans-unit id="cleantalk.config.enablePlugin">
 				<source>Enable plugin: Enable plugin description</source>
 			</trans-unit>
-			<trans-unit id="cleantalk.config.customForms">
-				<source>Custom forms checking: Custom forms checking description</source>
+			<trans-unit id="cleantalk.config.accessKey">
+				<source>Access key:</source>
 			</trans-unit>
 		</body>
 	</file>
