@@ -18,4 +18,11 @@ $EM_CONF['cleantalk'] = [
         'suggests' => [
         ],
     ],
+    'autoload' => [
+        'psr-4' => [
+            'Cleantalk\\Classes\\' => 'Classes',
+            'Cleantalk\\Common\\' => 'lib/Cleantalk/Common',
+            'Cleantalk\\Custom\\' => 'lib/Cleantalk/Custom'
+        ]
+    ],
 ];
