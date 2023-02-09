@@ -15,19 +15,22 @@ class Form
 {
     public function afterSubmit(FormRuntime $runtime, $element, $value, $requestArguments)
     {
-        if ($this->needProcess($runtime)) {
+        global $cleantalk_execute;
+
+        if ($this->needProcess($runtime) && !$cleantalk_execute) {
             $helper = new Helper();
 
             $filtered_form_data = $helper::get_fields_any($requestArguments);
 
             $spam_check = array();
-            $spam_check['type'] = 'standard_contact_form';
+            $spam_check['comment_type'] = 'standard_contact_form';
             $spam_check['sender_email'] = !empty($filtered_form_data['email']) ? $filtered_form_data['email'] : '';
             $spam_check['sender_nickname'] = !empty($filtered_form_data['nickname']) ? $filtered_form_data['nickname'] : '';
             $spam_check['message_title'] = !empty($filtered_form_data['subject']) ? $filtered_form_data['subject'] : '';
-            $spam_check['message_body'] = !empty($filtered_form_data['message']) && is_array($filtered_form_data['message'])
+            $spam_check['message'] = !empty($filtered_form_data['message']) && is_array($filtered_form_data['message'])
                 ? implode("\n", $filtered_form_data['message'])
                 : '';
+
             $spam_check['event_token'] = !empty($runtime->getRequest()->getParsedBody()['ct_bot_detector_event_token'])
                 ? $runtime->getRequest()->getParsedBody()['ct_bot_detector_event_token']
                 : null;
@@ -60,6 +63,7 @@ class Form
                     die($ct_die_page);
                 }
             }
+            $cleantalk_execute = true;
         }
 
         return $value;

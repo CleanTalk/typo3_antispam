@@ -179,7 +179,11 @@ class CleantalkRequest
      *
      * @var string
      */
-    public $method_name = 'check_message'; 
+    public $method_name = 'check_message';
+    
+    public $comment_type;
+    public $message_title;
+    public $event_token;
 
     /**
      * Fill params with constructor
@@ -190,7 +194,7 @@ class CleantalkRequest
     {
         if (is_array($params) && count($params) > 0) {
             foreach ($params as $param => $value) {
-                $this->{$param} = $value;
+                $this->$param = $value;
             }
         }
     }
