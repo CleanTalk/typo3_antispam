@@ -54,14 +54,14 @@ class Cleantalk
      *
      * @var string
      */
-    public $server_url = null;
+    public $server_url = 'https://moderate.cleantalk.org';
 
     /**
      * Last work url
      *
      * @var string
      */
-    public $work_url = null;
+    public $work_url = 'https://moderate.cleantalk.org';
 
     /**
      * WOrk url ttl
@@ -127,8 +127,8 @@ class Cleantalk
     /**
      * Function checks whether it is possible to publish the message
      *
-     * @param  CleantalkRequest $request
-     * @return type
+     * @param CleantalkRequest $request
+     * @return bool|CleantalkResponse|\CleantalkResponse
      */
     public function isAllowMessage(CleantalkRequest $request)
     {
@@ -785,6 +785,11 @@ class Cleantalk
         $url='https://api.cleantalk.org';
         $result=CleantalkHelper::sendRawRequest($url, $request);
         return $result;
+    }
+
+    public static function getLockPageFile()
+    {
+        return __DIR__ . '/lock-page-ct-die.html';
     }
 }
 if(!function_exists('apache_request_headers') ) {
