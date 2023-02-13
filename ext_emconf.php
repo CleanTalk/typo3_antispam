@@ -1,12 +1,12 @@
 <?php
 
 $EM_CONF['cleantalk'] = [
-    'title' => 'CleanTalk antispam',
+    'title' => 'CleanTalk anti-spam',
     'description' => 'Protect your site from spam',
     'category' => 'module',
-    'author' => 'Cleantalk',
+    'author' => 'CleanTalk',
     'author_email' => 'welcome@cleantalk.org',
-    'author_company' => 'Cleantalk',
+    'author_company' => 'CleanTalk',
     'state' => 'stable',
     'version' => '1.0.0',
     'constraints' => [

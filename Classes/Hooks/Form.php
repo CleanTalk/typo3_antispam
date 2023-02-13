@@ -7,7 +7,7 @@ namespace Cleantalk\Classes\Hooks;
 use Cleantalk\Common\Cleaner\Sanitize;
 use Cleantalk\Common\Variables\Server;
 use Cleantalk\Custom\Antispam\Cleantalk;
-use Cleantalk\Custom\Antispam\CleantalkRequest;
+use Cleantalk\Common\Antispam\CleantalkRequest;
 use Cleantalk\Custom\Helper\Helper;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
 
@@ -18,9 +18,7 @@ class Form
         global $cleantalk_execute;
 
         if ($this->needProcess($runtime) && !$cleantalk_execute) {
-            $helper = new Helper();
-
-            $filtered_form_data = $helper::get_fields_any($requestArguments);
+            $filtered_form_data = Helper::get_fields_any($requestArguments);
 
             $spam_check = array();
             $spam_check['comment_type'] = 'standard_contact_form';
@@ -36,12 +34,12 @@ class Form
                 : null;
 
             if ($spam_check['sender_email'] || $spam_check['message_title'] || $spam_check['message_body']) {
-                $default_params = $this->getDefaultRequestParams($helper);
+                $default_params = $this->getDefaultRequestParams(Helper::class);
                 $ct         = new Cleantalk();
                 $ct_request = new CleantalkRequest(
-                    $helper::arrayMergeSaveNumericKeysRecursive($default_params, $spam_check)
+                    Helper::arrayMergeSaveNumericKeysRecursive($default_params, $spam_check)
                 );
-                
+
                 $request_result = $ct->isAllowMessage($ct_request);
 
                 if ($request_result->allow == 0) {

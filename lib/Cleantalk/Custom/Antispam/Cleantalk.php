@@ -2,6 +2,9 @@
 
 namespace Cleantalk\Custom\Antispam;
 
+use Cleantalk\Common\Antispam\CleantalkRequest;
+use Cleantalk\Common\Antispam\CleantalkResponse;
+
 /**
  * Cleantalk base class
  *
@@ -128,7 +131,7 @@ class Cleantalk
      * Function checks whether it is possible to publish the message
      *
      * @param CleantalkRequest $request
-     * @return bool|CleantalkResponse|\CleantalkResponse
+     * @return bool|CleantalkResponse
      */
     public function isAllowMessage(CleantalkRequest $request)
     {
@@ -138,36 +141,10 @@ class Cleantalk
     }
 
     /**
-     * Function checks whether it is possible to publish the message
-     *
-     * @param  CleantalkRequest $request
-     * @return type
-     */
-    public function isAllowUser(CleantalkRequest $request)
-    {
-        $request = $this->filterRequest($request);
-        $msg = $this->createMsg('check_newuser', $request);
-        return $this->httpRequest($msg);
-    }
-
-    /**
-     * Function sends the results of manual moderation
-     *
-     * @param  CleantalkRequest $request
-     * @return type
-     */
-    public function sendFeedback(CleantalkRequest $request)
-    {
-        $request = $this->filterRequest($request);
-        $msg = $this->createMsg('send_feedback', $request);
-        return $this->httpRequest($msg);
-    }
-
-    /**
      *  Filter request params
      *
-     * @param  CleantalkRequest $request
-     * @return type
+     * @param CleantalkRequest $request
+     * @return CleantalkRequest
      */
     private function filterRequest(CleantalkRequest $request)
     {
@@ -219,7 +196,7 @@ class Cleantalk
     /**
      * Compress data and encode to base64
      *
-     * @param  type string
+     * @param  string
      * @return string
      */
     private function compressData($data = '')
@@ -248,9 +225,9 @@ class Cleantalk
     /**
      * Create msg for cleantalk server
      *
-     * @param  type             $method
-     * @param  CleantalkRequest $request
-     * @return \xmlrpcmsg
+     * @param string $method
+     * @param CleantalkRequest $request
+     * @return CleantalkRequest
      */
     private function createMsg($method, CleantalkRequest $request)
     {
@@ -296,7 +273,9 @@ class Cleantalk
     /**
      * Send JSON request to servers
      *
-     * @param  $msg
+     * @param $data
+     * @param $url
+     * @param int $server_timeout
      * @return boolean|\CleantalkResponse
      */
     private function sendRequest($data, $url, $server_timeout = 15)
@@ -413,7 +392,7 @@ class Cleantalk
      * httpRequest
      *
      * @param  $msg
-     * @return boolean|\CleantalkResponse
+     * @return CleantalkResponse
      */
     private function httpRequest($msg)
     {
@@ -506,7 +485,7 @@ class Cleantalk
             }
         }
 
-        $response = new CleantalkResponse(null, $result);
+        $response = new CleantalkResponse($result);
 
         if (!empty($this->data_codepage) && $this->data_codepage !== 'UTF-8') {
             if (!empty($response->comment)) {
@@ -769,22 +748,6 @@ class Cleantalk
         }
 
         return $str;
-    }
-
-    /**
-     * Function gets information about spam active networks
-     *
-     * @param  string api_key
-     * @return JSON/array
-     */
-    public function get_2s_blacklists_db($api_key)
-    {
-        $request=array();
-        $request['method_name'] = '2s_blacklists_db';
-        $request['auth_key'] = $api_key;
-        $url='https://api.cleantalk.org';
-        $result=CleantalkHelper::sendRawRequest($url, $request);
-        return $result;
     }
 
     public static function getLockPageFile()
