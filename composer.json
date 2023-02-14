@@ -1,5 +1,5 @@
 {
-  "name": "cleantalk/cleantalk",
+  "name": "cleantalk/typo3-cleantalk",
   "type": "typo3-cms-extension",
   "description": "Protect your site from spam",
   "license": "GPL-2.0-or-later",
