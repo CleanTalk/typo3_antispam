@@ -417,7 +417,10 @@ class Cleantalk
 
         //$msg->remote_addr=$_SERVER['REMOTE_ADDR'];
         //$msg->sender_info['remote_addr']=$_SERVER['REMOTE_ADDR'];
-        $si=(array)json_decode($msg->sender_info, true);
+		$si = array();
+		if (is_string($msg->sender_info)) {
+			$si=(array)json_decode($msg->sender_info, true);
+		}
 
         $si['remote_addr']=$_SERVER['REMOTE_ADDR'];
         $msg->x_forwarded_for=@$_SERVER['X_FORWARDED_FOR'];
