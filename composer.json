@@ -1,0 +1,31 @@
+{
+  "name": "cleantalk/cleantalk",
+  "type": "typo3-cms-extension",
+  "description": "Protect your site from spam",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "typo3/cms-core": "^10.4 || ^11.0"
+  },
+  "require-dev": {
+    "cleantalk/antispam": "*",
+    "cleantalk/firewall": "*",
+    "cleantalk/storage-handler": "*"
+  },
+  "config": {
+    "allow-plugins": {
+      "cleantalk/apbct-installer": true
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Cleantalk\\Classes\\": "Classes",
+      "Cleantalk\\Common\\": "lib/Cleantalk/Common",
+      "Cleantalk\\Custom\\": "lib/Cleantalk/Custom"
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "cleantalk"
+    }
+  }
+}
