@@ -8,13 +8,13 @@
     "typo3/cms-core": "^10.4 || ^11.0"
   },
   "require-dev": {
-    "cleantalk/antispam": "*",
-    "cleantalk/firewall": "*",
-    "cleantalk/storage-handler": "*"
+    "cleantalk/antispam": "*"
   },
   "config": {
     "allow-plugins": {
-      "cleantalk/apbct-installer": true
+      "cleantalk/apbct-installer": true,
+      "typo3/cms-composer-installers": true,
+      "typo3/class-alias-loader": true
     }
   },
   "autoload": {
