@@ -26,7 +26,7 @@
   },
   "extra": {
     "typo3/cms": {
-      "extension-key": "cleantalk"
+      "extension-key": "cleantalk_antispam"
     }
   }
 }

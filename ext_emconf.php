@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF['cleantalk'] = [
+$EM_CONF['cleantalk_antispam'] = [
     'title' => 'CleanTalk anti-spam',
     'description' => 'Protect your site from spam',
     'category' => 'module',
