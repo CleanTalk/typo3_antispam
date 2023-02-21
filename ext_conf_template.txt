@@ -1,8 +1,5 @@
-  # cat=basic/enable; type=boolean; label=LLL:EXT:cleantalk/locallang_em.xlf:cleantalk.config.enablePlugin
+# cat=basic/enable; type=boolean; label=LLL:EXT:cleantalk/Resources/Private/Language/locallang_be.xlf:cleantalk.config.enablePlugin
 enablePlugin = 1
 
-# cat=basic/enable; type=string; label=LLL:EXT:cleantalk/locallang_em.xlf:cleantalk.config.accessKey
+# cat=basic/enable; type=string; label=LLL:EXT:cleantalk/Resources/Private/Language/locallang_be.xlf:cleantalk.config.accessKey
 accessKey =
-
-  # cat=basic/enable; type=boolean; label=LLL:EXT:cleantalk/locallang_em.xlf:cleantalk.config.customForms
-customForms = 1
