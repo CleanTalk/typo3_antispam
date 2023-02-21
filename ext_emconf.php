@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF['cleantalk_antispam'] = [
+$EM_CONF['typo3_antispam'] = [
     'title' => 'CleanTalk anti-spam',
     'description' => 'Protect your site from spam',
     'category' => 'module',
