@@ -3,9 +3,9 @@
   "type": "typo3-cms-extension",
   "description": "CleanTalk adds anti-spam protection that is invisible to users, without the use of captcha/reCaptcha.",
   "license": "GPL-2.0-or-later",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "require": {
-    "typo3/cms-core": "^10 || ^11"
+    "typo3/cms-core": "^10.4 || ^11.*.*@dev"
   },
   "require-dev": {
     "cleantalk/antispam": "*"
