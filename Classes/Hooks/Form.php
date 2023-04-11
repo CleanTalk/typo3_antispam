@@ -87,7 +87,7 @@ class Form
             'x_forwarded_for' => $helper::ipGet('x_forwarded_for', false),
             'x_real_ip'       => $helper::ipGet('x_real_ip', false),
             'auth_key'        => $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['accessKey'],
-            'agent'       => 'typo3-1.0.0',
+            'agent'       => 'typo3-1.0.1',
         ];
     }
 }
