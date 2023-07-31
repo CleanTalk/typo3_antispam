@@ -6,3 +6,7 @@ CleanTalk adds anti-spam protection that is invisible to users, without the use 
 ## Requirements
 
 * CleanTalk account https://cleantalk.org/register?product=anti-spam
+
+## Forms types list ready to protect:
+*     ext\frm
+*     powermail
