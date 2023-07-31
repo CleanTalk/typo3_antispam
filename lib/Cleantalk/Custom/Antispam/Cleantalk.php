@@ -258,6 +258,23 @@ class Cleantalk
 
         $request->method_name = $method;
 
+        // Wiping session cookies from request
+        $ct_tmp = apache_request_headers();
+
+        if (isset($ct_tmp['Cookie'])) {
+            $cookie_name = 'Cookie';
+        } elseif (isset($ct_tmp['cookie'])) {
+            $cookie_name = 'cookie';
+        } else {
+            $cookie_name = 'COOKIE';
+        }
+
+        if (isset($ct_tmp[$cookie_name])) {
+            unset($ct_tmp[$cookie_name]);
+        }
+
+        $request->all_headers = !empty($ct_tmp) ? json_encode($ct_tmp) : '';
+
         //
         // Removing non UTF8 characters from request, because non UTF8 or malformed characters break json_encode().
         //

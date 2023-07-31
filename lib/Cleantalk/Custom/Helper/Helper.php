@@ -320,13 +320,26 @@ class Helper extends \Cleantalk\Common\Helper\Helper
     return $return_param;
   }
 
-  /**
-   * Get site url for remote calls.
-   *
-   * @return string@important This method can be overloaded in the CMS-based Helper class.
-   */
-  public static function getSiteUrl()
-  {
+    /**
+    * Get site url for remote calls.
+    *
+    * @return string@important This method can be overloaded in the CMS-based Helper class.
+    */
+    public static function getSiteUrl()
+    {
     return ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . ( isset($_SERVER['SCRIPT_URL']) ? $_SERVER['SCRIPT_URL'] : '' );
-  }
+    }
+
+    public static function getDefaultRequestParams(): array
+    {
+        return [
+            'sender_ip' => self::ipGet('remote_addr', false),
+            'x_forwarded_for' => self::ipGet('x_forwarded_for', false),
+            'x_real_ip'       => self::ipGet('x_real_ip', false),
+            'auth_key'        => $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['accessKey'],
+            'agent'       => 'typo3-1.0.1',
+            'referrer' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '',
+            'page_url' => isset($_SERVER['REQUEST_URI']) ? Helper::getSiteUrl() . $_SERVER['REQUEST_URI'] : '',
+        ];
+    }
 }

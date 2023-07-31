@@ -1,8 +1,8 @@
 <?php
+namespace Cleantalk\Classes\Controller;
 
-declare(strict_types=1);
-
-namespace Cleantalk\Classes\Hooks;
+use In2code\Powermail\Controller\FormController as FormControllerOrigin;
+use TYPO3\CMS\Core\Mail\MailMessage;
 
 use Cleantalk\Common\Cleaner\Sanitize;
 use Cleantalk\Common\Variables\Server;
@@ -11,27 +11,46 @@ use Cleantalk\Common\Antispam\CleantalkRequest;
 use Cleantalk\Custom\Helper\Helper;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
 
-class Form
+/**
+ * SendMailService
+ *
+ * @package powermailextend
+ */
+class FormController
 {
-    public function afterSubmit(FormRuntime $runtime, $element, $value, $requestArguments)
+
+    /**
+     * Manipulate message object short before powermail send the mail
+     *
+     * @param MailMessage $message
+     * @param array $email
+     * @param FormController $originalService
+     */
+    public function spamCheck($email, $hash, FormControllerOrigin $originalService)
     {
         global $cleantalk_execute;
 
-        if ($this->needProcess($runtime) && !$cleantalk_execute) {
-            $filtered_form_data = Helper::get_fields_any($requestArguments);
-
+        if (!$cleantalk_execute && $this->needProcess()) {
+            $filtered_form_data = Helper::get_fields_any($_POST);
             $spam_check = array();
-            $spam_check['comment_type'] = 'standard_contact_form';
+            $spam_check['comment_type'] = 'powermail_contact_form';
             $spam_check['sender_email'] = !empty($filtered_form_data['email']) ? $filtered_form_data['email'] : '';
             $spam_check['sender_nickname'] = !empty($filtered_form_data['nickname']) ? $filtered_form_data['nickname'] : '';
             $spam_check['message_title'] = !empty($filtered_form_data['subject']) ? $filtered_form_data['subject'] : '';
-            $spam_check['message'] = !empty($filtered_form_data['message']) && is_array($filtered_form_data['message'])
-                ? implode("\n", $filtered_form_data['message'])
-                : '';
+            $spam_check['sender_info']['REFFERRER'] = Server::get('HTTP_REFERER');
 
-            $spam_check['event_token'] = !empty($runtime->getRequest()->getParsedBody()['ct_bot_detector_event_token'])
-                ? $runtime->getRequest()->getParsedBody()['ct_bot_detector_event_token']
+            foreach ($filtered_form_data['message'] as $key => $value) {
+                if (preg_match('/^tx_powermail.+_field_text$/', $key)){
+                    $spam_check['message'] = $value;
+                    break;
+                }
+            }
+
+            $spam_check['event_token'] = !empty($_POST['ct_bot_detector_event_token'])
+                ? $_POST['ct_bot_detector_event_token']
                 : null;
+
+            $spam_check['js_on'] = (bool)($spam_check['event_token']);
 
             if ($spam_check['sender_email'] || $spam_check['message_title'] || $spam_check['message_body']) {
                 $default_params = Helper::getDefaultRequestParams();
@@ -64,30 +83,19 @@ class Form
             $cleantalk_execute = true;
         }
 
-        return $value;
+        return;
     }
 
-    private function needProcess(FormRuntime $runtime): bool
+    private function needProcess(): bool
     {
         if (
-            $runtime->getRequest()->getMethod() === 'POST' &&
+            !empty('POST') &&
             $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['enablePlugin'] &&
             $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['accessKey']
         ) {
             return true;
         }
-
         return false;
     }
 
-    private function getDefaultRequestParams($helper): array
-    {
-        return [
-            'sender_ip' => $helper::ipGet('remote_addr', false),
-            'x_forwarded_for' => $helper::ipGet('x_forwarded_for', false),
-            'x_real_ip'       => $helper::ipGet('x_real_ip', false),
-            'auth_key'        => $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['accessKey'],
-            'agent'       => 'typo3-1.0.1',
-        ];
-    }
 }
