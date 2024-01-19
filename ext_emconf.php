@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF['typo3_antispam'] = [
+$EM_CONF['cleantalk'] = [
     'title' => 'CleanTalk anti-spam',
     'description' => 'CleanTalk adds anti-spam protection that is invisible to users, without the use of captcha/reCaptcha.',
     'category' => 'module',
@@ -8,7 +8,7 @@ $EM_CONF['typo3_antispam'] = [
     'author_email' => 'welcome@cleantalk.org',
     'author_company' => 'CleanTalk',
     'state' => 'stable',
-    'version' => '1.1',
+    'version' => '1.2',
     'constraints' => [
         'depends' => [
             'typo3' => '11.0.0-11.9.99',

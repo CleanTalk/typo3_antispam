@@ -71,8 +71,8 @@ class Form
     {
         if (
             $runtime->getRequest()->getMethod() === 'POST' &&
-            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['enablePlugin'] &&
-            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['accessKey']
+            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleantalk']['enablePlugin'] &&
+            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleantalk']['accessKey']
         ) {
             return true;
         }
@@ -86,7 +86,7 @@ class Form
             'sender_ip' => $helper::ipGet('remote_addr', false),
             'x_forwarded_for' => $helper::ipGet('x_forwarded_for', false),
             'x_real_ip'       => $helper::ipGet('x_real_ip', false),
-            'auth_key'        => $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['accessKey'],
+            'auth_key'        => $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleantalk']['accessKey'],
             'agent'       => 'typo3-1.1',
         ];
     }

@@ -95,8 +95,8 @@ class cleantalkIntegrations
     {
         if (
             !empty('POST') &&
-            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['enablePlugin'] &&
-            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['typo3_antispam']['accessKey']
+            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleantalk']['enablePlugin'] &&
+            $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cleantalk']['accessKey']
         ) {
             return true;
         }
