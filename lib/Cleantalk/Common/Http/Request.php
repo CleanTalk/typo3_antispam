@@ -8,7 +8,7 @@ namespace Cleantalk\Common\Http;
  * @version       1.0.0
  * @package       Cleantalk\Common\Helpers
  * @author        Cleantalk team (welcome@cleantalk.org)
- * @copyright (C) CleanTalk team (http://cleantalk.org)
+ * @copyright (C) CleanTalk team (https://cleantalk.org)
  * @license       GNU/GPL: http://www.gnu.org/copyleft/gpl.html
  * @see           https://github.com/CleanTalk/security-malware-firewall
  */
