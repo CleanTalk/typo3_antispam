@@ -3,6 +3,8 @@ Typo3 anti-spam extension.
 
 CleanTalk adds anti-spam protection that is invisible to users, without the use of captcha/reCaptcha.
 
+If you find this project useful, please consider starring ⭐ it on GitHub — it helps us grow and support development!
+
 ## Requirements
 
 * CleanTalk account https://cleantalk.org/register?product=anti-spam
